@@ -1,19 +1,20 @@
-package com.lokodom.alquilatucoche.model.entidad
+package com.lokodom.alquilatucoche.model.peticion.reservas
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Reserva(
+data class ModificarReservaRequest
+    (
     @SerialName("id")
     val id: Long,
 
-    @SerialName("estado")
-    val estado: String,
+    @SerialName("estadoReserva")
+    val estadoReserva: String,
 
     @SerialName("fechaInicio")
     val fechaInicio: String,
 
     @SerialName("fechaFin")
-    val fechaFin: String,
+    val fechaFin: String
 )

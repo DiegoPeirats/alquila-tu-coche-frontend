@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    private const val BASE_URL = "http://192.168.0.12:8080/api/"
+    private const val BASE_URL = "http://192.168.0.15:8080/api/"
 
     private val json = Json {
         ignoreUnknownKeys = true

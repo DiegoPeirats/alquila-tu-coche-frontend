@@ -4,7 +4,10 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AltaUsuarioRequest(
+data class ModificarUsuarioRequest(
+    @SerialName("id")
+    val id: Long,
+
     @SerialName("nombre")
     val nombre: String,
 

@@ -1,22 +1,22 @@
-package com.lokodom.alquilatucoche.model.entidad
+package com.lokodom.alquilatucoche.model.peticion.vehiculos
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Vehiculo(
+data class ModificarVehiculoRequest(
     @SerialName("id")
     val id: Long,
 
     @SerialName("tipo")
     val tipo: String,
 
-    @SerialName("propietarioId")
-    val propietarioId: Long,
+    @SerialName("idPropietario")
+    val idPropietario: Long,
 
     @SerialName("provincia")
     val provincia: String,
 
-    @SerialName("ofertas")
-    val ofertas: List<Oferta> = emptyList(),
+    @SerialName("matricula")
+    val matricula: String
 )
