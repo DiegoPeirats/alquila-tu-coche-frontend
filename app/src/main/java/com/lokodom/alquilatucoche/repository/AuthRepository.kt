@@ -1,0 +1,25 @@
+package com.lokodom.alquilatucoche.repository
+
+import com.lokodom.alquilatucoche.model.peticion.auth.LoginRequest
+import com.lokodom.alquilatucoche.model.respuesta.LoginResponse
+import com.lokodom.alquilatucoche.network.RetrofitClient
+import com.lokodom.alquilatucoche.utils.UiState
+
+class AuthRepository {
+    private val api = RetrofitClient.authApi
+
+    suspend fun login(email: String, password: String): UiState<LoginResponse> {
+        return try {
+            val response = api.login(LoginRequest(email, password))
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null) UiState.Success(body)
+                else UiState.Error("Respuesta vacía del servidor")
+            } else {
+                UiState.Error("Error ${response.code()}: ${response.message()}")
+            }
+        } catch (e: Exception) {
+            UiState.Error(e.message ?: "Error de conexión")
+        }
+    }
+}
