@@ -5,29 +5,27 @@ import androidx.lifecycle.viewModelScope
 import com.lokodom.alquilatucoche.model.entidad.Oferta
 import com.lokodom.alquilatucoche.repository.OfertasRepository
 import com.lokodom.alquilatucoche.utils.UiState
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
-class OfertasViewModel : ViewModel() {
+class OfertaDetailViewModel : ViewModel() {
 
     private val repo = OfertasRepository()
 
-    private val _state = MutableStateFlow<UiState<List<Oferta>>>(UiState.Idle)
+    private val _state = MutableStateFlow<UiState<Oferta>>(UiState.Idle)
     val state = _state.asStateFlow()
 
-    fun load(token: String) {
+    private val _diasSeleccionados = MutableStateFlow(1)
+    val diasSeleccionados = _diasSeleccionados.asStateFlow()
+
+    fun load(token: String, ofertaId: Long) {
         viewModelScope.launch {
             _state.value = UiState.Loading
-            _state.value = repo.getOfertas(token)
+            _state.value = repo.getOferta(token, ofertaId)
         }
     }
 
-    fun deleteOferta(token: String, id: Long) {
-        viewModelScope.launch {
-            repo.deleteOferta(token, id)
-            load(token) // refresh
-        }
+    fun setDias(dias: Int) {
+        _diasSeleccionados.value = dias.coerceAtLeast(1)
     }
 }

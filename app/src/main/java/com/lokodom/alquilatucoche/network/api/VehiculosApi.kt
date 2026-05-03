@@ -1,33 +1,32 @@
 package com.lokodom.alquilatucoche.network.api
 
-import com.lokodom.alquilatucoche.model.*
 import com.lokodom.alquilatucoche.model.entidad.Vehiculo
+import com.lokodom.alquilatucoche.model.peticion.vehiculos.CrearVehiculoRequest
 import retrofit2.Response
 import retrofit2.http.*
 
 interface VehiculosApi {
 
-    @POST("vehiculos/alta")
+    @GET("vehiculos/{id}")
+    suspend fun getVehiculo(
+        @Header("Authorization") token: String,
+        @Path("id") id: Long
+    ): Response<Vehiculo>
+
+    @GET("vehiculos")
+    suspend fun getVehiculos(
+        @Header("Authorization") token: String
+    ): Response<List<Vehiculo>>
+
+    @POST("vehiculos/crear")
     suspend fun crearVehiculo(
         @Header("Authorization") token: String,
-        @Body vehiculo: Vehiculo
-    ): Response<Unit>
+        @Body request: CrearVehiculoRequest
+    ): Response<Vehiculo>
 
-    @PUT("vehiculos/modificacion")
-    suspend fun actualizarVehiculo(
-        @Header("Authorization") token: String,
-        @Body vehiculo: Vehiculo
-    ): Response<Unit>
-
-    @DELETE("vehiculos/baja/{id}")
+    @DELETE("vehiculos/eliminar/{id}")
     suspend fun eliminarVehiculo(
         @Header("Authorization") token: String,
         @Path("id") id: Long
     ): Response<Unit>
-
-    @GET("vehiculos/vehiculosUsuario/{id}")
-    suspend fun getVehiculosUsuario(
-        @Header("Authorization") token: String,
-        @Path("id") id: Long
-    ): Response<List<Vehiculo>>
 }

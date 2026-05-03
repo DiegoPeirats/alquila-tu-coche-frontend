@@ -1,20 +1,20 @@
 package com.lokodom.alquilatucoche.repository
 
-import com.lokodom.alquilatucoche.model.peticion.auth.LoginRequest
-import com.lokodom.alquilatucoche.model.respuesta.LoginResponse
+import com.lokodom.alquilatucoche.model.entidad.Propietario
+import com.lokodom.alquilatucoche.model.entidad.Usuario
 import com.lokodom.alquilatucoche.network.RetrofitClient
 import com.lokodom.alquilatucoche.utils.UiState
 
-class AuthRepository {
-    private val api = RetrofitClient.authApi
+class UsuariosRepository {
+    private val api = RetrofitClient.usuariosApi
 
-    suspend fun login(email: String, password: String): UiState<LoginResponse> {
+    suspend fun getMe(token: String): UiState<Usuario> {
         return try {
-            val response = api.login(LoginRequest(email, password))
+            val response = api.getMe("Bearer $token")
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) UiState.Success(body)
-                else UiState.Error("Respuesta vacía del servidor")
+                else UiState.Error("No se pudo obtener el usuario actual")
             } else {
                 UiState.Error("Error ${response.code()}: ${response.message()}")
             }

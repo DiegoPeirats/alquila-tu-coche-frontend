@@ -1,20 +1,20 @@
 package com.lokodom.alquilatucoche.repository
 
-import com.lokodom.alquilatucoche.model.peticion.auth.LoginRequest
-import com.lokodom.alquilatucoche.model.respuesta.LoginResponse
+import com.lokodom.alquilatucoche.model.entidad.Valoracion
+import com.lokodom.alquilatucoche.model.peticion.valoraciones.CrearValoracionRequest
 import com.lokodom.alquilatucoche.network.RetrofitClient
 import com.lokodom.alquilatucoche.utils.UiState
 
-class AuthRepository {
-    private val api = RetrofitClient.authApi
+class ValoracionesRepository {
+    private val api = RetrofitClient.valoracionesApi
 
-    suspend fun login(email: String, password: String): UiState<LoginResponse> {
+    suspend fun crearValoracion(token: String, request: CrearValoracionRequest): UiState<Valoracion> {
         return try {
-            val response = api.login(LoginRequest(email, password))
+            val response = api.crearValoracion("Bearer $token", request)
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) UiState.Success(body)
-                else UiState.Error("Respuesta vacía del servidor")
+                else UiState.Error("Error creando valoración")
             } else {
                 UiState.Error("Error ${response.code()}: ${response.message()}")
             }

@@ -9,18 +9,18 @@ data class Valoracion(
     @SerialName("id")
     val id: Long,
 
-    @SerialName("direccion")
-    val direccion: Long,
+    @SerialName("usuarioId")
+    val usuarioId: Long,
 
-    @SerialName("email")
-    val email: String,
+    @SerialName("ofertaId")
+    val ofertaId: Long,
 
-    @SerialName("nombre")
-    val nombre: String? = null,
+    @SerialName("mensaje")
+    val mensaje: String,
 
-    @SerialName("reservas")
-    val reservas: List<Reserva> = emptyList(),
+    @SerialName("valoracion")
+    val valoracion: Int,
 
-    @SerialName("valoraciones")
-    val valoraciones: List<Valoracion> = emptyList()
+    @SerialName("createdAt")
+    val createdAt: String
 )

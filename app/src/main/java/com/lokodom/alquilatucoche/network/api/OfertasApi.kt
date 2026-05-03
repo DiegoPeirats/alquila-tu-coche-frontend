@@ -1,8 +1,9 @@
 package com.lokodom.alquilatucoche.network.api
 
-import com.lokodom.alquilatucoche.model.*
+import com.lokodom.alquilatucoche.model.respuesta.ContratarOfertaResponse
 import com.lokodom.alquilatucoche.model.entidad.Oferta
 import com.lokodom.alquilatucoche.model.peticion.ofertas.ContratarOfertaRequest
+import com.lokodom.alquilatucoche.model.peticion.ofertas.CreacionOfertaRequest
 import com.lokodom.alquilatucoche.model.peticion.ofertas.OfertasFiltro
 import retrofit2.Response
 import retrofit2.http.*
@@ -15,27 +16,27 @@ interface OfertasApi {
         @Body filtro: OfertasFiltro // o tu DTO real
     ): Response<List<Oferta>>
 
-    @POST("ofertas/crearOferta")
-    suspend fun createOferta(
+    @GET("ofertas/{id}")
+    suspend fun getOferta(
         @Header("Authorization") token: String,
-        @Body oferta: Oferta
-    ): Response<Unit>
+        @Path("id") id: Long
+    ): Response<Oferta>
 
-    @PUT("ofertas/modificarOferta")
-    suspend fun updateOferta(
+    @POST("ofertas/crear")
+    suspend fun crearOferta(
         @Header("Authorization") token: String,
-        @Body oferta: Oferta
-    ): Response<Unit>
+        @Body request: CreacionOfertaRequest
+    ): Response<Oferta>
 
-    @DELETE("ofertas/eliminarOferta")
+    @DELETE("ofertas/eliminarOferta/{id}")
     suspend fun deleteOferta(
         @Header("Authorization") token: String,
-        @Body request: Long
+        @Path("id") id: Long
     ): Response<Unit>
 
     @POST("ofertas/contratarOferta")
     suspend fun contratarOferta(
         @Header("Authorization") token: String,
         @Body request: ContratarOfertaRequest
-    ): Response<Unit>
+    ): Response<ContratarOfertaResponse>
 }

@@ -9,7 +9,7 @@ data class Usuario(
     val id: Long,
 
     @SerialName("direccion")
-    val direccion: Long,
+    val direccion: String,
 
     @SerialName("email")
     val email: String,

@@ -15,6 +15,9 @@ data class Oferta(
     @SerialName("estado")
     val estado: String,
 
+    @SerialName("precioPorDia")
+    val precioPorDia: Double,
+
     @SerialName("reservas")
     val reservas: List<Reserva> = emptyList(),
 

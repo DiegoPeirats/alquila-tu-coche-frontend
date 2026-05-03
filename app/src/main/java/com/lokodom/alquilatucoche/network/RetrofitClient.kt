@@ -4,6 +4,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.lokodom.alquilatucoche.network.api.AuthApi
 import com.lokodom.alquilatucoche.network.api.OfertasApi
 import com.lokodom.alquilatucoche.network.api.ReservasApi
+import com.lokodom.alquilatucoche.network.api.UsuariosApi
 import com.lokodom.alquilatucoche.network.api.ValoracionesApi
 import com.lokodom.alquilatucoche.network.api.VehiculosApi
 import kotlinx.serialization.json.Json
@@ -48,6 +49,10 @@ object RetrofitClient {
 
     val ofertasApi: OfertasApi by lazy {
         retrofit.create(OfertasApi::class.java)
+    }
+
+    val usuariosApi: UsuariosApi by lazy {
+        retrofit.create(UsuariosApi::class.java)
     }
 
     val vehiculosApi: VehiculosApi by lazy {
