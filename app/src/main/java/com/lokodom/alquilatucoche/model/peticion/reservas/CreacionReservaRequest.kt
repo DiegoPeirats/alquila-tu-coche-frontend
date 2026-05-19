@@ -6,18 +6,9 @@ import java.time.LocalDate
 
 @Serializable
 data class CreacionReservaRequest(
-    @SerialName("estadoReserva")
-    val estadoReserva: String,
-
-    @SerialName("pagoId")
-    val pagoId: Long,
-
-    @SerialName("fechaInicio")
-    val fechaInicio: String,
-
-    @SerialName("fechaFin")
-    val fechaFin: String,
-
-    @SerialName("ofertaId")
-    val ofertaId: Long
+    @SerialName("estadoReserva") val estadoReserva: String,
+    @SerialName("pagoId")        val pagoId: Long,
+    @SerialName("fechaInicio")   val fechaInicio: String,
+    @SerialName("fechaFin")      val fechaFin: String,
+    @SerialName("ofertaId")      val ofertaId: Long
 )

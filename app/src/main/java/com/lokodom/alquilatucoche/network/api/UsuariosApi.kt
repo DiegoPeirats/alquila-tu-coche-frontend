@@ -13,7 +13,7 @@ interface UsuariosApi {
         @Path("id") id: Long
     ): Response<Propietario>
 
-    @GET("usuarios/me")
+    @GET("miInformacion")
     suspend fun getMe(
         @Header("Authorization") token: String
     ): Response<Usuario>

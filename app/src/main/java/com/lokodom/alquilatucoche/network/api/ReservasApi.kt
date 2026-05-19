@@ -2,6 +2,7 @@ package com.lokodom.alquilatucoche.network.api
 
 import com.lokodom.alquilatucoche.model.entidad.Reserva
 import com.lokodom.alquilatucoche.model.peticion.reservas.CreacionReservaRequest
+import com.lokodom.alquilatucoche.model.peticion.reservas.ModificarReservaRequest
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -19,9 +20,21 @@ interface ReservasApi {
         @Path("id") id: Long
     ): Response<Reserva>
 
-    @GET("reservas/usuario/{usuarioId}")
+    @GET("reservas/usuario")
     suspend fun getReservasUsuario(
-        @Header("Authorization") token: String,
-        @Path("usuarioId") usuarioId: Long
+        @Header("Authorization") token: String
     ): Response<List<Reserva>>
+
+    @PUT("reservas/modificar/{id}")
+    suspend fun modificarReserva(
+        @Header("Authorization") token: String,
+        @Path("id") id: Long,
+        @Body request: ModificarReservaRequest
+    ): Response<Reserva>
+
+    @DELETE("reservas/cancelar/{id}")
+    suspend fun cancelarReserva(
+        @Header("Authorization") token: String,
+        @Path("id") id: Long
+    ): Response<Unit>
 }

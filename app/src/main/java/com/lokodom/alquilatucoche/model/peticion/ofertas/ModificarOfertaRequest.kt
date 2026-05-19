@@ -5,9 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ModificarOfertaRequest(
-    @SerialName("id")
-    val id: Long,
-
-    @SerialName("precioPorDia")
-    val precioPorDia: Double
+    @SerialName("precioPorDia") val precioPorDia: Double,
+    @SerialName("estado") val estado: String
 )

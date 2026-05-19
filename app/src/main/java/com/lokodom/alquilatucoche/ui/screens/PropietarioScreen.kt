@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.*
@@ -20,6 +21,7 @@ import com.lokodom.alquilatucoche.model.entidad.Propietario
 import com.lokodom.alquilatucoche.ui.components.*
 import com.lokodom.alquilatucoche.utils.UiState
 import com.lokodom.alquilatucoche.viewmodels.PropietarioViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,32 +29,58 @@ fun PropietarioScreen(
     token: String,
     propietarioId: Long,
     onBack: () -> Unit,
+    onNavigateToOfertas: () -> Unit,
+    onNavigateToMiPerfil: () -> Unit,
+    onLogout: () -> Unit,
+    onNavigateToMisReservas: () -> Unit,
+    onNavigateToMisOfertas: () -> Unit,
     vm: PropietarioViewModel = viewModel()
 ) {
     val state by vm.state.collectAsState()
 
     LaunchedEffect(propietarioId) { vm.load(token, propietarioId) }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Perfil del propietario", fontWeight = FontWeight.Bold) },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Filled.ArrowBack, "Volver")
+    WithDrawer(
+        onNavigateToOfertas = onNavigateToOfertas,
+        onNavigateToMiPerfil = onNavigateToMiPerfil,
+        onLogout = onLogout,
+        onNavigateToMisReservas = onNavigateToMisReservas,
+        onNavigateToMisOfertas = onNavigateToMisOfertas
+    ) { drawerState, scope ->
+
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("Perfil del propietario", fontWeight = FontWeight.Bold) },
+                    navigationIcon = {
+                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                            Icon(Icons.Filled.Menu, contentDescription = "Menú")
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = onBack) {
+                            Icon(Icons.Filled.ArrowBack, contentDescription = "Volver")
+                        }
                     }
-                }
-            )
-        }
-    ) { padding ->
-        when (val s = state) {
-            is UiState.Loading -> LoadingScreen()
-            is UiState.Error -> ErrorScreen(s.message, onRetry = { vm.load(token, propietarioId) })
-            is UiState.Success<Propietario> -> PropietarioContent(
-                propietario = s.data,
-                modifier = Modifier.padding(padding)
-            )
-            else -> Unit
+                )
+            }
+        ) { padding ->
+
+            when (val s = state) {
+                is UiState.Loading -> LoadingScreen()
+
+                is UiState.Error -> ErrorScreen(
+                    s.message,
+                    onRetry = { vm.load(token, propietarioId) }
+                )
+
+                is UiState.Success<Propietario> -> PropietarioContent(
+                    propietario = s.data,
+                    modifier = Modifier.padding(padding)
+                )
+
+                else -> Unit
+            }
         }
     }
 }

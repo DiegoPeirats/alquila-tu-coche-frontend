@@ -4,17 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ModificarReservaRequest
-    (
-    @SerialName("id")
-    val id: Long,
-
-    @SerialName("estadoReserva")
-    val estadoReserva: String,
-
-    @SerialName("fechaInicio")
-    val fechaInicio: String,
-
-    @SerialName("fechaFin")
-    val fechaFin: String
+data class ModificarReservaRequest(
+    @SerialName("fechaInicio") val fechaInicio: String,
+    @SerialName("fechaFin") val fechaFin: String
 )

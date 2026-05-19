@@ -10,10 +10,24 @@ import retrofit2.http.*
 
 interface OfertasApi {
 
+    // Todas las ofertas (sin filtro)
     @POST("ofertas/obtenerOfertas")
     suspend fun getOfertas(
         @Header("Authorization") token: String,
-        @Body filtro: OfertasFiltro // o tu DTO real
+        @Body filtro: OfertasFiltro?
+    ): Response<List<Oferta>>
+
+    // Ofertas disponibles (filtradas por estado en backend)
+    @GET("ofertas/obtenerOfertas")
+    suspend fun getOfertasDisponibles(
+        @Header("Authorization") token: String
+    ): Response<List<Oferta>>
+
+    // Ofertas con filtro de búsqueda
+    @POST("ofertas/obtenerOfertas")
+    suspend fun getOfertasFiltradas(
+        @Header("Authorization") token: String,
+        @Body filtro: OfertasFiltro
     ): Response<List<Oferta>>
 
     @GET("ofertas/{id}")
@@ -34,7 +48,7 @@ interface OfertasApi {
         @Path("id") id: Long
     ): Response<Unit>
 
-    @POST("ofertas/contratarOferta")
+    @POST("ofertas/contratar")
     suspend fun contratarOferta(
         @Header("Authorization") token: String,
         @Body request: ContratarOfertaRequest

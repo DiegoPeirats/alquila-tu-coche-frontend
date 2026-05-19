@@ -9,9 +9,24 @@ import com.lokodom.alquilatucoche.utils.UiState
 class OfertasRepository {
     private val api = RetrofitClient.ofertasApi
 
-    suspend fun getOfertas(token: String): UiState<List<Oferta>> {
+    // Ofertas disponibles (pantalla principal - filtro por estado en backend)
+    suspend fun getOfertasDisponibles(token: String): UiState<List<Oferta>> {
         return try {
-            val response = api.getOfertas("Bearer $token", OfertasFiltro())
+            val response = api.getOfertasDisponibles("Bearer $token")
+            if (response.isSuccessful) {
+                UiState.Success(response.body() ?: emptyList())
+            } else {
+                UiState.Error("Error ${response.code()}: ${response.message()}")
+            }
+        } catch (e: Exception) {
+            UiState.Error(e.message ?: "Error de conexión")
+        }
+    }
+
+    // Ofertas con filtro de búsqueda avanzado
+    suspend fun getOfertasFiltradas(token: String, filtro: OfertasFiltro): UiState<List<Oferta>> {
+        return try {
+            val response = api.getOfertasFiltradas("Bearer $token", filtro)
             if (response.isSuccessful) {
                 UiState.Success(response.body() ?: emptyList())
             } else {

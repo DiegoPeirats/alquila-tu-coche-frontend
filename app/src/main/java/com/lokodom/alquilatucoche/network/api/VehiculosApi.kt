@@ -29,4 +29,10 @@ interface VehiculosApi {
         @Header("Authorization") token: String,
         @Path("id") id: Long
     ): Response<Unit>
+
+    @GET("reservas/fechasReservadas/{vehiculoId}")
+    suspend fun getFechasReservadas(
+        @Header("Authorization") token: String,
+        @Path("vehiculoId") vehiculoId: Long
+    ): Response<List<String>>   // ["2026-05-10", "2026-05-11", ...]
 }

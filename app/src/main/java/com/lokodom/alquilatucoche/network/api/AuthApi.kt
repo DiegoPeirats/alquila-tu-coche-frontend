@@ -1,6 +1,7 @@
 package com.lokodom.alquilatucoche.network.api
 
 import com.lokodom.alquilatucoche.model.*
+import com.lokodom.alquilatucoche.model.entidad.Usuario
 import com.lokodom.alquilatucoche.model.peticion.auth.*
 import com.lokodom.alquilatucoche.model.respuesta.LoginResponse
 import retrofit2.Response
@@ -10,6 +11,9 @@ interface AuthApi {
 
     @POST("public/login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
+
+    @POST("public/alta")
+    suspend fun registro(@Body request: AltaUsuarioRequest): Response<Usuario>
 
     @POST("public/alta")
     suspend fun register(@Body request: AltaUsuarioRequest): Response<Unit>

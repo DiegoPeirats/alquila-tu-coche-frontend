@@ -3,6 +3,8 @@ package com.lokodom.alquilatucoche.network
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.lokodom.alquilatucoche.network.api.AuthApi
 import com.lokodom.alquilatucoche.network.api.OfertasApi
+import com.lokodom.alquilatucoche.network.api.PagosApi
+import com.lokodom.alquilatucoche.network.api.PropietarioApi
 import com.lokodom.alquilatucoche.network.api.ReservasApi
 import com.lokodom.alquilatucoche.network.api.UsuariosApi
 import com.lokodom.alquilatucoche.network.api.ValoracionesApi
@@ -55,6 +57,10 @@ object RetrofitClient {
         retrofit.create(UsuariosApi::class.java)
     }
 
+    val propietarioApi: PropietarioApi by lazy {
+        retrofit.create(PropietarioApi::class.java)
+    }
+
     val vehiculosApi: VehiculosApi by lazy {
         retrofit.create(VehiculosApi::class.java)
     }
@@ -66,4 +72,6 @@ object RetrofitClient {
     val valoracionesApi: ValoracionesApi by lazy {
         retrofit.create(ValoracionesApi::class.java)
     }
+
+    val pagosApi: PagosApi = retrofit.create(PagosApi::class.java)
 }

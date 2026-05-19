@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization") // ✅ añadido correctamente
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -16,6 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -24,6 +25,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -32,12 +34,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -45,7 +47,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 
     packaging {
@@ -57,44 +59,59 @@ android {
 
 dependencies {
 
-    // ✅ Compose BOM actualizado
-    implementation(platform("androidx.compose:compose-bom:2024.02.00"))
-
+    // ── Core ──────────────────────────────────────────────────
     implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
+    implementation("androidx.activity:activity-compose:1.9.0")
 
-// ✅ Lifecycle actualizado
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose") // 👈 NECESARIO
+    // ── Compose BOM ───────────────────────────────────────────
+    implementation(platform("androidx.compose:compose-bom:2024.09.00"))
 
-// ✅ Activity + Compose
-    implementation("androidx.activity:activity-compose:1.8.2")
-
-// ✅ Compose
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
+
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.compose.material:material-icons-extended") // 👈 NECESARIO
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.compose.animation:animation")
 
-// ✅ Navigation
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+    // ── Navigation ────────────────────────────────────────────
+    implementation("androidx.navigation:navigation-compose:2.8.0")
+    implementation("androidx.browser:browser:1.8.0")
 
-// ✅ Retrofit + Serialization
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // ── Lifecycle + ViewModel ─────────────────────────────────
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.3")
+
+    // ── Retrofit + Serialización ──────────────────────────────
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
+
+    // ✅ Compatible con Kotlin 1.9.24
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
 
-// ✅ Coroutines
+    // ── Coroutines ────────────────────────────────────────────
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-// Tests
+    // ── Accompanist ───────────────────────────────────────────
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.34.0")
+
+    // ── Coil ──────────────────────────────────────────────────
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
+    // ── Stripe Android SDK ────────────────────────────────────
+    // implementation("com.stripe:stripe-android:20.47.4")
+
+    // ── Tests ─────────────────────────────────────────────────
     testImplementation("junit:junit:4.13.2")
+
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.02.00"))
+
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.09.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 
     debugImplementation("androidx.compose.ui:ui-tooling")

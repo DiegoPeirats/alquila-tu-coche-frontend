@@ -32,6 +32,9 @@ data class Propietario(
     @SerialName("valoracionesRecibidas")
     val valoracionesRecibidas: List<Valoracion> = emptyList(),
 
+    @SerialName("reservas")
+    val reservas: List<Reserva> = emptyList(),
+
     @SerialName("vehiculos")
     val vehiculos: List<Vehiculo> = emptyList()
 )
